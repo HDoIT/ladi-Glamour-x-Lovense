@@ -29,6 +29,7 @@ h4 {
     font-family: 'Playfair Display', serif;
     font-weight: 600;
     color: var(--dark);
+    font-display: swap;
 }
 
 .container {
