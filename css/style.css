@@ -141,14 +141,14 @@ nav ul li a:hover::after {
     position: relative;
     overflow: hidden;
 }
-
+/* 
 .hero-content h1 {
     font-family: 'Playfair Display', serif;
     font-weight: 600;
     color: var(--dark);
     font-size: 3rem;
     margin-bottom: 1rem;
-}
+} */
 
 .hero::before {
     content: '';
