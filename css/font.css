@@ -3,7 +3,25 @@
     font-style: normal;
     font-weight: 400;
     font-display: swap;
-    src: url('/fonts/playfair-display-vietnamese-400.woff2') format('woff2');
+    src: url('/fonts/playfair-display-v37-latin_vietnamese-regular.woff2') format('woff2');
+}
+
+@font-face {
+    font-family: 'Playfair Display';
+    font-style: normal;
+    font-weight: 400;
+    font-display: swap;
+    src: url('/fonts/playfair-display-v37-latin_vietnamese-500.woff2') format('woff2');
+    
+}
+
+@font-face {
+    font-family: 'Playfair Display';
+    font-style: normal;
+    font-weight: 400;
+    font-display: swap;
+    src: url('/fonts/playfair-display-v37-latin_vietnamese-600.woff2') format('woff2');
+    
 }
 
 @font-face {
@@ -11,7 +29,7 @@
     font-style: normal;
     font-weight: 700;
     font-display: swap;
-    src: url('/fonts/playfair-display-vietnamese-700.woff2') format('woff2');
+    src: url('/fonts/montserrat-v29-latin_vietnamese-700.woff2') format('woff2');
 }
 
 @font-face {
@@ -19,7 +37,7 @@
     font-style: normal;
     font-weight: 300;
     font-display: swap;
-    src: url('/fonts/montserrat-vietnamese-300.woff2') format('woff2');
+    src: url('/fonts/montserrat-v29-latin_vietnamese-300.woff2') format('woff2');
 }
 
 @font-face {
@@ -27,5 +45,21 @@
     font-style: normal;
     font-weight: 500;
     font-display: swap;
-    src: url('/fonts/montserrat-vietnamese-500.woff2') format('woff2');
+    src: url('/fonts/montserrat-v29-latin_vietnamese-500.woff2') format('woff2');
+}
+
+@font-face {
+    font-family: 'Montserrat';
+    font-style: normal;
+    font-weight: 500;
+    font-display: swap;
+    src: url('/fonts/montserrat-v29-latin_vietnamese-600.woff2') format('woff2');
+}
+
+@font-face {
+    font-family: 'Montserrat';
+    font-style: normal;
+    font-weight: 500;
+    font-display: swap;
+    src: url('/fonts/montserrat-v29-latin_vietnamese-700.woff2') format('woff2');
 }
