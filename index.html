@@ -249,16 +249,6 @@
     <!-- Font tự host -->
     <link rel="preload" href="./css/font.css" as="style">
     <link rel="stylesheet" href="./css/font.css">
-
-    <!-- CSS chính -->
-    <link rel="stylesheet" href="./css/style.css">
-
-    <!-- Font Awesome tối ưu -->
-    <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
-        as="style" onload="this.onload=null;this.rel='stylesheet'">
-    <noscript>
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    </noscript>
     <style>
         .hero-content h1 {
             font-family: 'Playfair Display', serif;
@@ -268,6 +258,20 @@
             margin-bottom: 1rem;
         }
     </style>
+    <!-- CSS chính -->
+    <link rel="preload" as="style" href="./css/style.css">
+    <link rel="stylesheet" href="./css/style.css" media="print" onload="this.onload=null;this.media='all';">
+    <noscript>
+        <link rel="stylesheet" href="./css/style.css">
+    </noscript>
+
+    <!-- Font Awesome tối ưu -->
+    <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+        as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    </noscript>
+
 </head>
 
 <body>
