@@ -132,56 +132,7 @@ nav ul li a:hover::after {
 
 
 /* Hero Section */
-/* 
-.hero-content h1 {
-    font-family: 'Playfair Display', serif;
-    font-weight: 600;
-    color: var(--dark);
-    font-size: 3rem;
-    margin-bottom: 1rem;
-} */
 
-.hero {
-    height: 100vh;
-    min-height: 700px;
-    background: linear-gradient(135deg, rgba(232, 62, 140, 0.1) 0%, rgba(255, 143, 171, 0.1) 100%);
-    display: flex;
-    align-items: center;
-    position: relative;
-    overflow: hidden;
-}
-
-/* .hero::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: url('/images/photo-1596462502278-27bfdc403348.avif') no-repeat center center/cover;
-    opacity: 0.3;
-    z-index: -1;
-} */
-
-.hero-bg {
-    position: absolute;
-    inset: 0;
-    z-index: -1;
-    opacity: 0.3;
-    pointer-events: none; /* đảm bảo không cản trở nội dung phía trên */
-    overflow: hidden; /* tránh tràn ảnh */
-}
-
-.hero-bg picture,
-.hero-bg img {
-    width: 100%;
-    height: 100%;
-    display: block;
-}
-
-.hero-bg img {
-    object-fit: cover;
-}
 
 .hero-content {
     max-width: 600px;
