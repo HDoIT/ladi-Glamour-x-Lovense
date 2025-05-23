@@ -145,8 +145,25 @@ const navMenu = document.getElementById('nav-menu');
 menuToggle.addEventListener('click', () => {
     navMenu.classList.toggle('active');
     menuToggle.innerHTML = navMenu.classList.contains('active')
-        ? '<i class="fas fa-times"></i>'
-        : '<i class="fas fa-bars"></i>';
+        ? `<svg
+        xmlns = "http://www.w3.org/2000/svg"
+    viewBox = "0 0 352 512"
+    width = "24"
+    height = "24"
+    aria - hidden="true"
+    focusable = "false"
+    class="icon-times"
+        >
+        <path
+            fill="currentColor"
+            d="M242.72 256l100.07-100.07c12.28-12.28 12.28-32.19 0-44.48l-22.24-22.24c-12.28-12.28-32.19-12.28-44.48 0L176 189.28 75.93 89.21c-12.28-12.28-32.19-12.28-44.48 0L9.21 111.45c-12.28 12.28-12.28 32.19 0 44.48L109.28 256 9.21 356.07c-12.28 12.28-12.28 32.19 0 44.48l22.24 22.24c12.28 12.28 32.19 12.28 44.48 0L176 322.72l100.07 100.07c12.28 12.28 32.19 12.28 44.48 0l22.24-22.24c12.28-12.28 12.28-32.19 0-44.48L242.72 256z"
+        />
+      </svg > `
+        : `<svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" width="24" height="24"
+        aria-hidden="true" focusable="false">
+        <path fill="currentColor"
+            d="M16 132h416c8.837 0 16-7.163 16-16v-16c0-8.837-7.163-16-16-16H16C7.163 84 0 91.163 0 100v16c0 8.837 7.163 16 16 16zm416 56H16c-8.837 0-16 7.163-16 16v16c0 8.837 7.163 16 16 16h416c8.837 0 16-7.163 16-16v-16c0-8.837-7.163-16-16-16zm0 128H16c-8.837 0-16 7.163-16 16v16c0 8.837 7.163 16 16 16h416c8.837 0 16-7.163 16-16v-16c0-8.837-7.163-16-16-16z" />
+    </svg>`;
 });
 document.addEventListener('click', function (e) {
     const ripple = document.createElement('div');
@@ -159,6 +176,9 @@ document.addEventListener('click', function (e) {
         ripple.remove();
     }, 600);
 });
+
+
+
 const backToTopBtn = document.getElementById("backToTop");
 
 // Show/hide button when scroll
