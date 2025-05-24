@@ -139,32 +139,116 @@ document.addEventListener('DOMContentLoaded', () => {
     render();
 });
 
+
 const menuToggle = document.getElementById('menu-toggle');
-const navMenu = document.getElementById('nav-menu');
+const mobileNavMenu = document.getElementById('mobile-nav-menu');
 
 menuToggle.addEventListener('click', () => {
-    navMenu.classList.toggle('active');
-    menuToggle.innerHTML = navMenu.classList.contains('active')
-        ? `<svg
-        xmlns = "http://www.w3.org/2000/svg"
-    viewBox = "0 0 352 512"
-    width = "24"
-    height = "24"
-    aria - hidden="true"
-    focusable = "false"
-    class="icon-times"
-        >
-        <path
-            fill="currentColor"
-            d="M242.72 256l100.07-100.07c12.28-12.28 12.28-32.19 0-44.48l-22.24-22.24c-12.28-12.28-32.19-12.28-44.48 0L176 189.28 75.93 89.21c-12.28-12.28-32.19-12.28-44.48 0L9.21 111.45c-12.28 12.28-12.28 32.19 0 44.48L109.28 256 9.21 356.07c-12.28 12.28-12.28 32.19 0 44.48l22.24 22.24c12.28 12.28 32.19 12.28 44.48 0L176 322.72l100.07 100.07c12.28 12.28 32.19 12.28 44.48 0l22.24-22.24c12.28-12.28 12.28-32.19 0-44.48L242.72 256z"
-        />
-      </svg > `
-        : `<svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" width="24" height="24"
-        aria-hidden="true" focusable="false">
-        <path fill="currentColor"
-            d="M16 132h416c8.837 0 16-7.163 16-16v-16c0-8.837-7.163-16-16-16H16C7.163 84 0 91.163 0 100v16c0 8.837 7.163 16 16 16zm416 56H16c-8.837 0-16 7.163-16 16v16c0 8.837 7.163 16 16 16h416c8.837 0 16-7.163 16-16v-16c0-8.837-7.163-16-16-16zm0 128H16c-8.837 0-16 7.163-16 16v16c0 8.837 7.163 16 16 16h416c8.837 0 16-7.163 16-16v-16c0-8.837-7.163-16-16-16z" />
-    </svg>`;
+    mobileNavMenu.classList.toggle('active');
+    menuToggle.innerHTML = mobileNavMenu.classList.contains('active')
+        ? `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 352 512" width="24" height="24" aria-hidden="true" focusable="false">
+                    <path fill="currentColor" d="M242.72 256l100.07-100.07c12.28-12.28 12.28-32.19 0-44.48l-22.24-22.24c-12.28-12.28-32.19-12.28-44.48 0L176 189.28 75.93 89.21c-12.28-12.28-32.19-12.28-44.48 0L9.21 111.45c-12.28 12.28-12.28 32.19 0 44.48L109.28 256 9.21 356.07c-12.28 12.28-12.28 32.19 0 44.48l22.24 22.24c12.28 12.28 32.19 12.28 44.48 0L176 322.72l100.07 100.07c12.28 12.28 32.19 12.28 44.48 0l22.24-22.24c12.28-12.28 12.28-32.19 0-44.48L242.72 256z"/>
+                </svg>`
+        : `<svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" width="24" height="24" aria-hidden="true" focusable="false">
+                    <path fill="currentColor" d="M16 132h416c8.837 0 16-7.163 16-16v-16c0-8.837-7.163-16-16-16H16C7.163 84 0 91.163 0 100v16c0 8.837 7.163 16 16 16zm416 56H16c-8.837 0-16 7.163-16 16v16c0 8.837 7.163 16 16 16h416c8.837 0 16-7.163 16-16v-16c0-8.837-7.163-16-16-16zm0 128H16c-8.837 0-16 7.163-16 16v16c0 8.837 7.163 16 16 16h416c8.837 0 16-7.163 16-16v-16c0-8.837-7.163-16-16-16z"/>
+                </svg>`;
 });
+
+// Tab Functionality
+function activateTab(tabId) {
+    // Remove active class from all buttons and contents
+    document.querySelectorAll('.tab-btn').forEach(btn => {
+        btn.classList.remove('active');
+    });
+
+    document.querySelectorAll('.tab-content').forEach(content => {
+        content.classList.remove('active');
+    });
+
+    // Add active class to corresponding tab and content
+    document.querySelector(`.tab-btn[data-tab="${tabId}"]`).classList.add('active');
+    document.getElementById(tabId).classList.add('active');
+}
+
+// Setup desktop tabs
+const tabButtons = document.querySelectorAll('.tab-btn');
+tabButtons.forEach(button => {
+    button.addEventListener('click', () => {
+        const tabId = button.getAttribute('data-tab');
+        activateTab(tabId);
+    });
+});
+
+// Setup mobile product links
+const productLinks = document.querySelectorAll('.product-link');
+productLinks.forEach(link => {
+    link.addEventListener('click', (e) => {
+        e.preventDefault();
+        const tabId = link.getAttribute('data-tab');
+
+        // Close mobile menu
+        mobileNavMenu.classList.remove('active');
+        menuToggle.innerHTML = `<svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" width="24" height="24" aria-hidden="true" focusable="false">
+                    <path fill="currentColor" d="M16 132h416c8.837 0 16-7.163 16-16v-16c0-8.837-7.163-16-16-16H16C7.163 84 0 91.163 0 100v16c0 8.837 7.163 16 16 16zm416 56H16c-8.837 0-16 7.163-16 16v16c0 8.837 7.163 16 16 16h416c8.837 0 16-7.163 16-16v-16c0-8.837-7.163-16-16-16zm0 128H16c-8.837 0-16 7.163-16 16v16c0 8.837 7.163 16 16 16h416c8.837 0 16-7.163 16-16v-16c0-8.837-7.163-16-16-16z"/>
+                </svg>`;
+
+        // Scroll to products section
+        document.getElementById('products').scrollIntoView({
+            behavior: 'smooth'
+        });
+
+        // Activate the corresponding tab
+        activateTab(tabId);
+    });
+});
+
+// Close menu when clicking on regular links
+const mobileNavLinks = document.querySelectorAll('.mobile-nav-menu a:not(.product-link)');
+mobileNavLinks.forEach(link => {
+    link.addEventListener('click', () => {
+        mobileNavMenu.classList.remove('active');
+        menuToggle.innerHTML = `<svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" width="24" height="24" aria-hidden="true" focusable="false">
+                    <path fill="currentColor" d="M16 132h416c8.837 0 16-7.163 16-16v-16c0-8.837-7.163-16-16-16H16C7.163 84 0 91.163 0 100v16c0 8.837 7.163 16 16 16zm416 56H16c-8.837 0-16 7.163-16 16v16c0 8.837 7.163 16 16 16h416c8.837 0 16-7.163 16-16v-16c0-8.837-7.163-16-16-16zm0 128H16c-8.837 0-16 7.163-16 16v16c0 8.837 7.163 16 16 16h416c8.837 0 16-7.163 16-16v-16c0-8.837-7.163-16-16-16z"/>
+                </svg>`;
+    });
+});
+
+// Header scroll effect
+window.addEventListener('scroll', () => {
+    const header = document.getElementById('header');
+    if (window.scrollY > 50) {
+        header.classList.add('scrolled');
+    } else {
+        header.classList.remove('scrolled');
+    }
+});
+
+// const menuToggle = document.getElementById('menu-toggle');
+// const navMenu = document.getElementById('nav-menu');
+
+// menuToggle.addEventListener('click', () => {
+//     navMenu.classList.toggle('active');
+//     menuToggle.innerHTML = navMenu.classList.contains('active')
+//         ? `<svg
+//         xmlns = "http://www.w3.org/2000/svg"
+//     viewBox = "0 0 352 512"
+//     width = "24"
+//     height = "24"
+//     aria - hidden="true"
+//     focusable = "false"
+//     class="icon-times"
+//         >
+//         <path
+//             fill="currentColor"
+//             d="M242.72 256l100.07-100.07c12.28-12.28 12.28-32.19 0-44.48l-22.24-22.24c-12.28-12.28-32.19-12.28-44.48 0L176 189.28 75.93 89.21c-12.28-12.28-32.19-12.28-44.48 0L9.21 111.45c-12.28 12.28-12.28 32.19 0 44.48L109.28 256 9.21 356.07c-12.28 12.28-12.28 32.19 0 44.48l22.24 22.24c12.28 12.28 32.19 12.28 44.48 0L176 322.72l100.07 100.07c12.28 12.28 32.19 12.28 44.48 0l22.24-22.24c12.28-12.28 12.28-32.19 0-44.48L242.72 256z"
+//         />
+//       </svg > `
+//         : `<svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" width="24" height="24"
+//         aria-hidden="true" focusable="false">
+//         <path fill="currentColor"
+//             d="M16 132h416c8.837 0 16-7.163 16-16v-16c0-8.837-7.163-16-16-16H16C7.163 84 0 91.163 0 100v16c0 8.837 7.163 16 16 16zm416 56H16c-8.837 0-16 7.163-16 16v16c0 8.837 7.163 16 16 16h416c8.837 0 16-7.163 16-16v-16c0-8.837-7.163-16-16-16zm0 128H16c-8.837 0-16 7.163-16 16v16c0 8.837 7.163 16 16 16h416c8.837 0 16-7.163 16-16v-16c0-8.837-7.163-16-16-16z" />
+//     </svg>`;
+// });
 document.addEventListener('click', function (e) {
     const ripple = document.createElement('div');
     ripple.classList.add('ripple-effect');
@@ -197,3 +281,151 @@ backToTopBtn.addEventListener("click", () => {
         behavior: "smooth"
     });
 });
+
+// Testimonial Slider
+document.addEventListener('DOMContentLoaded', function () {
+    const testimonials = document.querySelectorAll('.testimonial');
+    const dots = document.querySelectorAll('.testimonial-dot');
+    let currentSlide = 0;
+    let slideInterval;
+
+    // Function to show slide
+    function showSlide(index) {
+        testimonials.forEach(testimonial => testimonial.classList.remove('active'));
+        dots.forEach(dot => dot.classList.remove('active'));
+
+        testimonials[index].classList.add('active');
+        dots[index].classList.add('active');
+        currentSlide = index;
+    }
+
+    // Auto slide
+    function startSlider() {
+        slideInterval = setInterval(() => {
+            let nextSlide = (currentSlide + 1) % testimonials.length;
+            showSlide(nextSlide);
+        }, 5000);
+    }
+
+    // Dot navigation
+    dots.forEach(dot => {
+        dot.addEventListener('click', function () {
+            clearInterval(slideInterval);
+            showSlide(parseInt(this.getAttribute('data-slide')));
+            startSlider();
+        });
+    });
+
+    // Start the slider
+    startSlider();
+
+    // Sticky CTA
+    const stickyCta = document.getElementById('stickyCta');
+
+    window.addEventListener('scroll', function () {
+        // Show CTA when user scrolls 50% down the page
+        if (window.scrollY > (document.body.scrollHeight - window.innerHeight) * 0.5) {
+            stickyCta.classList.add('show');
+        } else {
+            stickyCta.classList.remove('show');
+        }
+    });
+
+    // Chat Popup
+    const chatPopup = document.getElementById('chatPopup');
+    const chatBox = document.getElementById('chatBox');
+    let chatVisible = false;
+
+    chatPopup.addEventListener('click', function () {
+        chatVisible = !chatVisible;
+        if (chatVisible) {
+            chatBox.classList.add('show');
+            chatPopup.style.transform = 'scale(1.1)';
+        } else {
+            chatBox.classList.remove('show');
+            chatPopup.style.transform = 'scale(1)';
+        }
+    });
+
+    // Close chat when clicking outside
+    document.addEventListener('click', function (e) {
+        if (chatVisible && !chatBox.contains(e.target)) {
+            if (e.target !== chatPopup && !chatPopup.contains(e.target)) {
+                chatVisible = false;
+                chatBox.classList.remove('show');
+                chatPopup.style.transform = 'scale(1)';
+            }
+        }
+    });
+});
+
+// Countdown Timer
+function updateCountdown() {
+    // Set the target date (24 hours from now)
+    const now = new Date();
+    const targetDate = new Date(now.getTime() + 24 * 60 * 60 * 1000); // 24 hours from now
+
+    // Update the countdown every second
+    const countdownInterval = setInterval(function () {
+        const now = new Date();
+        const timeLeft = targetDate - now;
+
+        // Calculate hours, minutes, seconds
+        const hours = Math.floor((timeLeft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        const minutes = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
+        const seconds = Math.floor((timeLeft % (1000 * 60)) / 1000);
+
+        // Display the result
+        document.getElementById('hours').textContent = String(hours).padStart(2, '0');
+        document.getElementById('minutes').textContent = String(minutes).padStart(2, '0');
+        document.getElementById('seconds').textContent = String(seconds).padStart(2, '0');
+
+        // If the countdown is finished
+        if (timeLeft < 0) {
+            clearInterval(countdownInterval);
+            document.getElementById('countdown').innerHTML = '<div class="expired">Offer expired!</div>';
+        }
+    }, 1000);
+}
+
+// Random stock level to create urgency
+function updateStockLevel() {
+    const stockLevels = ["Only 1 left!", "Only 2 left at this price!", "Only 3 remaining!", "Last 5 at 30% off!"];
+    const badges = document.querySelectorAll('.scarcity-badge');
+
+    // Change stock level every 10 seconds for demo purposes
+    setInterval(function () {
+        const randomIndex = Math.floor(Math.random() * stockLevels.length);
+        badges[0].textContent = stockLevels[randomIndex];
+    }, 10000);
+}
+
+// Initialize functions when DOM is loaded
+document.addEventListener('DOMContentLoaded', function () {
+    updateCountdown();
+    updateStockLevel();
+
+    // Add hover effects
+    const offerItems = document.querySelectorAll('.offer-item');
+    offerItems.forEach(item => {
+        item.addEventListener('mouseenter', function () {
+            this.style.transform = 'translateY(-5px)';
+        });
+        item.addEventListener('mouseleave', function () {
+            this.style.transform = 'translateY(0)';
+        });
+    });
+});
+
+document.getElementById('toggle-theme').addEventListener('click', () => {
+    document.body.classList.toggle('dark-mode');
+
+    // Save preference to localStorage
+    const isDarkMode = document.body.classList.contains('dark-mode');
+    localStorage.setItem('darkMode', isDarkMode);
+});
+
+// Check for saved preference on page load
+if (localStorage.getItem('darkMode') === 'true') {
+    document.body.classList.add('dark-mode');
+}
