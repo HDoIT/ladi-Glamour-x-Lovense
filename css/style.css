@@ -580,11 +580,11 @@ nav ul li a:hover::after {
 }
 
 .slider-nav.prev {
-    left: 0;
+    left: -18px;
 }
 
 .slider-nav.next {
-    right: 0;
+    right: -12px;
 }
 
 .slider-nav svg {
@@ -1592,7 +1592,7 @@ footer {
 }
 
 @media (max-width: 576px) {
-    
+
     .hero h1 {
         font-size: 2.2rem !important;
     }
