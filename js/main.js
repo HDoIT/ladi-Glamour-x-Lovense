@@ -176,6 +176,10 @@ tabButtons.forEach(button => {
     button.addEventListener('click', () => {
         const tabId = button.getAttribute('data-tab');
         activateTab(tabId);
+        document.querySelectorAll('.product-slider-container').forEach(container => {
+            const productGrid = container.querySelector('.product-grid');
+            productGrid.style.transform = 'translateX(0)';
+        });
     });
 });
 
@@ -223,32 +227,6 @@ window.addEventListener('scroll', () => {
     }
 });
 
-// const menuToggle = document.getElementById('menu-toggle');
-// const navMenu = document.getElementById('nav-menu');
-
-// menuToggle.addEventListener('click', () => {
-//     navMenu.classList.toggle('active');
-//     menuToggle.innerHTML = navMenu.classList.contains('active')
-//         ? `<svg
-//         xmlns = "http://www.w3.org/2000/svg"
-//     viewBox = "0 0 352 512"
-//     width = "24"
-//     height = "24"
-//     aria - hidden="true"
-//     focusable = "false"
-//     class="icon-times"
-//         >
-//         <path
-//             fill="currentColor"
-//             d="M242.72 256l100.07-100.07c12.28-12.28 12.28-32.19 0-44.48l-22.24-22.24c-12.28-12.28-32.19-12.28-44.48 0L176 189.28 75.93 89.21c-12.28-12.28-32.19-12.28-44.48 0L9.21 111.45c-12.28 12.28-12.28 32.19 0 44.48L109.28 256 9.21 356.07c-12.28 12.28-12.28 32.19 0 44.48l22.24 22.24c12.28 12.28 32.19 12.28 44.48 0L176 322.72l100.07 100.07c12.28 12.28 32.19 12.28 44.48 0l22.24-22.24c12.28-12.28 12.28-32.19 0-44.48L242.72 256z"
-//         />
-//       </svg > `
-//         : `<svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" width="24" height="24"
-//         aria-hidden="true" focusable="false">
-//         <path fill="currentColor"
-//             d="M16 132h416c8.837 0 16-7.163 16-16v-16c0-8.837-7.163-16-16-16H16C7.163 84 0 91.163 0 100v16c0 8.837 7.163 16 16 16zm416 56H16c-8.837 0-16 7.163-16 16v16c0 8.837 7.163 16 16 16h416c8.837 0 16-7.163 16-16v-16c0-8.837-7.163-16-16-16zm0 128H16c-8.837 0-16 7.163-16 16v16c0 8.837 7.163 16 16 16h416c8.837 0 16-7.163 16-16v-16c0-8.837-7.163-16-16-16z" />
-//     </svg>`;
-// });
 document.addEventListener('click', function (e) {
     const ripple = document.createElement('div');
     ripple.classList.add('ripple-effect');
@@ -429,3 +407,122 @@ document.getElementById('toggle-theme').addEventListener('click', () => {
 if (localStorage.getItem('darkMode') === 'true') {
     document.body.classList.add('dark-mode');
 }
+
+
+document.addEventListener('DOMContentLoaded', function() {
+    // Tab switching functionality
+    const tabButtons = document.querySelectorAll('.tab-btn');
+    const tabContents = document.querySelectorAll('.tab-content');
+    
+    tabButtons.forEach(button => {
+        button.addEventListener('click', () => {
+            const tabId = button.getAttribute('data-tab');
+            
+            // Update active tab button
+            tabButtons.forEach(btn => btn.classList.remove('active'));
+            button.classList.add('active');
+            
+            // Update active tab content
+            tabContents.forEach(content => {
+                content.classList.remove('active');
+            });
+            
+            document.getElementById(tabId).classList.add('active');
+            
+            // Reinitialize slider for the new tab after a small delay
+            setTimeout(() => {
+                const activeContainer = document.querySelector('.tab-content.active .product-slider-container');
+                if (activeContainer) {
+                    setupSlider(activeContainer);
+                }
+            }, 50);
+        });
+    });
+
+    // Slider functionality
+    function setupSlider(container) {
+        const slider = container.querySelector('.product-slider');
+        const productGrid = container.querySelector('.product-grid');
+        const prevBtn = container.querySelector('.prev');
+        const nextBtn = container.querySelector('.next');
+        let products = container.querySelectorAll('.product-card');
+        let currentPosition = 0;
+        let productWidth = 0;
+        let visibleProducts = 3;
+        let maxPosition = 0;
+
+        function calculateDimensions() {
+            // Get actual gap from CSS
+            const style = window.getComputedStyle(productGrid);
+            const gap = parseInt(style.gap) || 30;
+            
+            // Make sure first product is visible for measurement
+            if (products.length > 0) {
+                const originalDisplay = products[0].style.display;
+                products[0].style.display = 'block';
+                productWidth = products[0].offsetWidth + gap;
+                products[0].style.display = originalDisplay;
+            } else {
+                productWidth = 0;
+            }
+            
+            // Determine visible products based on screen size
+            if (window.innerWidth <= 768) {
+                visibleProducts = 1;
+            } else if (window.innerWidth <= 1024) {
+                visibleProducts = 2;
+            } else {
+                visibleProducts = 3;
+            }
+            
+            maxPosition = -((products.length - visibleProducts) * productWidth);
+            
+            console.log(`Slider dimensions - Width: ${productWidth}, Visible: ${visibleProducts}, Max: ${maxPosition}`);
+        }
+
+        function updateSlider() {
+            productGrid.style.transform = `translateX(${currentPosition}px)`;
+            prevBtn.disabled = currentPosition >= 0;
+            nextBtn.disabled = currentPosition <= maxPosition;
+        }
+
+        function slide(direction) {
+            calculateDimensions();
+            
+            if (direction === 'next' && currentPosition > maxPosition) {
+                currentPosition = Math.max(currentPosition - productWidth, maxPosition);
+            } else if (direction === 'prev' && currentPosition < 0) {
+                currentPosition = Math.min(currentPosition + productWidth, 0);
+            }
+            
+            updateSlider();
+        }
+
+        // Initialize
+        calculateDimensions();
+        updateSlider();
+
+        // Event listeners
+        nextBtn.addEventListener('click', () => slide('next'));
+        prevBtn.addEventListener('click', () => slide('prev'));
+
+        // Handle window resize
+        let resizeTimer;
+        window.addEventListener('resize', () => {
+            clearTimeout(resizeTimer);
+            resizeTimer = setTimeout(() => {
+                calculateDimensions();
+                // Adjust current position if needed
+                currentPosition = Math.max(currentPosition, maxPosition);
+                currentPosition = Math.min(currentPosition, 0);
+                updateSlider();
+            }, 100);
+        });
+    }
+
+    // Initialize first slider
+    const initialSlider = document.querySelector('.product-slider-container');
+    if (initialSlider) {
+        setupSlider(initialSlider);
+    }
+});

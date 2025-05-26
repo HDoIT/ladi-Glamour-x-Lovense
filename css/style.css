@@ -60,7 +60,74 @@ h4 {
     margin: 0 auto;
     padding: 0 20px;
 }
+.comparison-table {
+    margin: 20px 0;
+    overflow-x: auto;
+}
 
+.table-wrapper {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch; /* Cho scroll mượt trên mobile */
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+    min-width: 600px;
+}
+
+th, td {
+    border: 1px solid #ddd;
+    padding: 12px;
+    text-align: left;
+}
+
+th {
+    background-color: #f8f8f8;
+    font-weight: bold;
+    position: sticky;
+    top: 0;
+}
+
+tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+/* Phiên bản mobile */
+@media screen and (max-width: 768px) {
+    .table-wrapper {
+        overflow-x: scroll;
+        -webkit-overflow-scrolling: touch;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+    }
+    
+    table {
+        min-width: 100%;
+    }
+    
+    /* Giữ nguyên hiển thị tiêu đề */
+    thead {
+        display: table-header-group;
+    }
+    
+    th, td {
+        min-width: 120px;
+    }
+    
+    /* Thêm shadow để chỉ ra có thể scroll */
+    .table-wrapper:after {
+        content: "";
+        position: absolute;
+        top: 0;
+        right: 0;
+        width: 30px;
+        height: 100%;
+        background: linear-gradient(to right, rgba(255,255,255,0), rgba(255,255,255,1));
+        pointer-events: none;
+    }
+}
 /* Header */
 header {
     background: linear-gradient(135deg, var(--section) 0%, var(--section-gadient) 100%);
@@ -334,9 +401,19 @@ nav ul li a:hover::after {
 
 /* Products Section */
 .products {
-    padding: 100px 0;
-    background: linear-gradient(135deg, var(--section) 70%, var(--section-gadient) 100%);
-    /* background: linear-gradient(135deg, rgba(248, 237, 235, 0.8) 0%, rgba(255, 255, 255, 0.8) 100%); */
+    padding: 80px 0;
+    background: linear-gradient(135deg, var(--section) 70%, var(--section-gradient) 100%);
+}
+
+.section-title {
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.section-title h2 {
+    font-size: 2.2rem;
+    color: var(--text-dark);
+    margin-bottom: 10px;
 }
 
 .tabs {
@@ -344,25 +421,31 @@ nav ul li a:hover::after {
     justify-content: center;
     margin-bottom: 40px;
     flex-wrap: wrap;
+    gap: 10px;
 }
 
 .tab-btn {
-    padding: 12px 25px;
+    padding: 12px 20px;
     background: none;
     border: none;
     border-bottom: 3px solid transparent;
     font-family: 'Montserrat', sans-serif;
     font-weight: 600;
-    font-size: 1rem;
+    font-size: 0.95rem;
     color: var(--text-light);
     cursor: pointer;
     transition: all 0.3s ease;
-    margin: 0 10px;
+    border-radius: 5px;
+}
+
+.tab-btn:hover {
+    background: rgba(255, 107, 158, 0.1);
 }
 
 .tab-btn.active {
     color: var(--primary);
     border-bottom: 3px solid var(--primary);
+    background: rgba(255, 107, 158, 0.1);
 }
 
 .tab-content {
@@ -374,10 +457,21 @@ nav ul li a:hover::after {
     display: block;
 }
 
+.product-slider-container {
+    position: relative;
+    padding: 0 40px;
+}
+
+.product-slider {
+    overflow: hidden;
+    margin: 0 auto;
+}
+
 .product-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    display: flex;
+    transition: transform 0.5s ease;
     gap: 30px;
+    padding-bottom: 20px;
 }
 
 .product-card {
@@ -386,7 +480,8 @@ nav ul li a:hover::after {
     overflow: hidden;
     box-shadow: 0 5px 15px var(--shadow);
     transition: all 0.3s ease;
-    position: relative;
+    min-width: calc(33.333% - 20px);
+    flex: 0 0 calc(33.333% - 20px);
 }
 
 .product-card:hover {
@@ -431,31 +526,18 @@ nav ul li a:hover::after {
 .product-info h3 {
     margin-bottom: 10px;
     font-size: 1.3rem;
+    color: var(--text-dark);
 }
 
 .product-info p {
     color: var(--text-light);
     margin-bottom: 15px;
     font-size: 0.9rem;
-}
-
-.product-price {
-    font-weight: 600;
-    color: var(--primary);
-    font-size: 1.2rem;
-    margin-bottom: 15px;
-    display: flex;
-    align-items: center;
-}
-
-.product-price .old-price {
-    color: var(--text-light);
-    text-decoration: line-through;
-    font-size: 0.9rem;
-    margin-left: 10px;
+    line-height: 1.5;
 }
 
 .product-btn {
+    display: block;
     width: 100%;
     padding: 12px;
     background-color: var(--primary);
@@ -466,10 +548,97 @@ nav ul li a:hover::after {
     cursor: pointer;
     transition: all 0.3s ease;
     text-decoration: none;
+    text-align: center;
+    font-size: 0.95rem;
 }
 
 .product-btn:hover {
     background-color: var(--secondary);
+}
+
+.slider-nav {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 40px;
+    height: 40px;
+    background: var(--white);
+    border: none;
+    border-radius: 50%;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 2;
+    transition: all 0.3s ease;
+}
+
+.slider-nav:hover {
+    background: var(--primary);
+    color: white;
+}
+
+.slider-nav.prev {
+    left: 0;
+}
+
+.slider-nav.next {
+    right: 0;
+}
+
+.slider-nav svg {
+    width: 20px;
+    height: 20px;
+}
+
+.slider-nav:hover svg {
+    stroke: white;
+}
+
+/* Responsive styles */
+@media (max-width: 1024px) {
+    .product-card {
+        min-width: calc(50% - 15px);
+        flex: 0 0 calc(50% - 15px);
+    }
+}
+
+@media (max-width: 768px) {
+    .tabs {
+        justify-content: flex-start;
+        overflow-x: auto;
+        padding-bottom: 10px;
+        -webkit-overflow-scrolling: touch;
+        scrollbar-width: none;
+    }
+    
+    .tabs::-webkit-scrollbar {
+        display: none;
+    }
+    
+    .tab-btn {
+        white-space: nowrap;
+    }
+    
+    .product-slider-container {
+        padding: 0 20px;
+    }
+    
+    .product-card {
+        min-width: calc(100% - 10px);
+        flex: 0 0 calc(100% - 10px);
+    }
+    
+    .slider-nav {
+        width: 35px;
+        height: 35px;
+    }
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
 }
 
 /* Offer Section */
@@ -791,6 +960,16 @@ nav ul li a:hover::after {
     transform: scale(1.2);
 }
 
+.testimonial-avatar {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 3px solid var(--primary);
+    margin-right: 15px;
+}
+
+
 /* Quick Reviews Section */
 .quick-reviews {
     padding: 60px 0;
@@ -816,6 +995,9 @@ nav ul li a:hover::after {
     box-shadow: var(--shadow);
     position: relative;
     overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
 }
 
 .quick-review::before {
@@ -828,17 +1010,38 @@ nav ul li a:hover::after {
     background-color: var(--primary);
 }
 
-.quick-review-text {
-    font-size: 0.95rem;
-    margin-bottom: 10px;
-    color: var(--text-dark);
-    line-height: 1.5;
+.reviewer-info {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.review-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid var(--primary);
 }
 
 .quick-review-author {
     font-size: 0.85rem;
-    color: var(--primary);
+    color: var(--text-dark);
     font-weight: 600;
+    margin: 0;
+}
+
+.rating-stars {
+    color: #FFD700;
+    font-size: 0.8rem;
+    letter-spacing: 1px;
+}
+
+.quick-review-text {
+    font-size: 0.95rem;
+    margin: 0;
+    color: var(--text-dark);
+    line-height: 1.5;
 }
 
 /* Sticky CTA */
@@ -972,7 +1175,11 @@ nav ul li a:hover::after {
     .testimonial {
         padding: 30px 20px;
     }
-
+    .testimonial-avatar {
+        width: 50px;
+        height: 50px;
+    }
+    
     .quick-review {
         width: 100%;
     }
