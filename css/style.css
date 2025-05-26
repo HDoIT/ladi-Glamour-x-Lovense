@@ -1592,8 +1592,9 @@ footer {
 }
 
 @media (max-width: 576px) {
+    
     .hero h1 {
-        font-size: 2.2rem;
+        font-size: 2.2rem !important;
     }
 
     .hero p {
